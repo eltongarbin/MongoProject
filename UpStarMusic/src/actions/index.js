@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { hashHistory } from 'react-router';
+import history from './../utils/history';
 import {
   SET_AGE_RANGE,
   SET_YEARS_ACTIVE_RANGE,
@@ -31,74 +31,70 @@ export const clearError = () => {
   return { type: CLEAR_ERROR };
 };
 
-export const selectArtist = id => {
+export const selectArtist = (id) => {
   return { type: SELECT_ARTIST, payload: id };
 };
 
-export const deselectArtist = id => {
+export const deselectArtist = (id) => {
   return { type: DESELECT_ARTIST, payload: id };
 };
 
-export const setRetired = ids => (dispatch, getState) =>
-  SetRetiredProxy(ids.map(id => id.toString()))
+export const setRetired = (ids) => (dispatch, getState) =>
+  SetRetiredProxy(ids.map((id) => id.toString()))
     .then(() => dispatch({ type: RESET_SELECTION }))
     .then(() => refreshSearch(dispatch, getState));
 
-export const setNotRetired = ids => (dispatch, getState) =>
-  SetNotRetiredProxy(ids.map(id => id.toString()))
+export const setNotRetired = (ids) => (dispatch, getState) =>
+  SetNotRetiredProxy(ids.map((id) => id.toString()))
     .then(() => dispatch({ type: RESET_SELECTION }))
     .then(() => refreshSearch(dispatch, getState));
 
-export const setAgeRange = () => dispatch =>
-  GetAgeRangeProxy()
-    .then(result =>
-      dispatch({ type: SET_AGE_RANGE, payload: result })
-    );
+export const setAgeRange = () => (dispatch) =>
+  GetAgeRangeProxy().then((result) =>
+    dispatch({ type: SET_AGE_RANGE, payload: result })
+  );
 
-export const setYearsActiveRange = () => dispatch =>
-  GetYearsActiveRangeProxy()
-    .then(result =>
-      dispatch({ type: SET_YEARS_ACTIVE_RANGE, payload: result })
-    );
+export const setYearsActiveRange = () => (dispatch) =>
+  GetYearsActiveRangeProxy().then((result) =>
+    dispatch({ type: SET_YEARS_ACTIVE_RANGE, payload: result })
+  );
 
-export const searchArtists = (...criteria) => dispatch =>
-  SearchArtistsProxy(...criteria)
-    .then((result = []) =>
-      dispatch({ type: SEARCH_ARTISTS, payload: result })
-    );
+export const searchArtists = (...criteria) => (dispatch) =>
+  SearchArtistsProxy(...criteria).then((result = []) =>
+    dispatch({ type: SEARCH_ARTISTS, payload: result })
+  );
 
-export const findArtist = id => dispatch =>
-  FindArtistProxy(id)
-    .then(artist =>
-      dispatch({ type: FIND_ARTIST, payload: artist })
-    );
+export const findArtist = (id) => (dispatch) =>
+  FindArtistProxy(id).then((artist) =>
+    dispatch({ type: FIND_ARTIST, payload: artist })
+  );
 
-export const createArtist = props => dispatch =>
+export const createArtist = (props) => (dispatch) =>
   CreateArtistProxy(props)
-    .then(artist => {
-      hashHistory.push(`artists/${artist.id}`);
+    .then((artist) => {
+      console.log(history);
+      history.push(`/artists/${artist.id}`);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       dispatch({ type: CREATE_ERROR, payload: error });
     });
 
-export const editArtist = (id, props) => dispatch =>
+export const editArtist = (id, props) => (dispatch) =>
   EditArtistProxy(id, props)
-    .then(() => hashHistory.push(`artists/${id}`))
-    .catch(error => {
+    .then(() => history.push(`/artists/${id}`))
+    .catch((error) => {
       console.log(error);
       dispatch({ type: CREATE_ERROR, payload: error });
     });
 
-export const deleteArtist = (id) => dispatch =>
+export const deleteArtist = (id) => (dispatch) =>
   DeleteArtistProxy(id)
-    .then(() => hashHistory.push('/'))
-    .catch(error => {
+    .then(() => history.push('/'))
+    .catch((error) => {
       console.log(error);
       dispatch({ type: CREATE_ERROR, payload: error });
     });
-
 
 //
 // Faux Proxies
@@ -120,7 +116,12 @@ const GetYearsActiveRangeProxy = (...args) => {
 };
 
 const SearchArtistsProxy = (criteria, offset, limit) => {
-  const result = SearchArtists(_.omit(criteria, 'sort'), criteria.sort, offset, limit);
+  const result = SearchArtists(
+    _.omit(criteria, 'sort'),
+    criteria.sort,
+    offset,
+    limit
+  );
   if (!result || !result.then) {
     return new Promise(() => {});
   }

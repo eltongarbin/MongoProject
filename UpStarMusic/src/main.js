@@ -4,6 +4,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { MongoClient } from 'mongodb';
+
+import history from './utils/history';
 import reducers from './reducers';
 import Routes from './router';
 import mongoose from 'mongoose';
@@ -18,7 +20,7 @@ const App = () => {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
   return (
-    <Provider store={store}>
+    <Provider store={store} history={history}>
       <Routes />
     </Provider>
   );
