@@ -14,9 +14,9 @@ const Routes = () => {
         <Header />
         <Route exact path="/" component={ArtistMain} />
         <Switch>
-          <Route path="artists/new" component={ArtistCreate} />
-          <Route path="artists/:id" component={ArtistDetail} />
-          <Route path="artists/:id/edit" component={ArtistEdit} />
+          <Route path="/artists/new" component={ArtistCreate} />
+          <Route path="/artists/:id" component={ArtistDetail} />
+          <Route path="/artists/:id/edit" component={ArtistEdit} />
         </Switch>
       </div>
     </HashRouter>
