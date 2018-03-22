@@ -10,7 +10,7 @@ class ArtistEdit extends Component {
   }
 
   componentWillMount() {
-    this.props.findArtist(this.props.params.id);
+    this.props.findArtist(this.props.match.params.id);
   }
 
   componentWillReceiveProps({ artist }) {
@@ -22,8 +22,8 @@ class ArtistEdit extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) {
-      this.props.findArtist(nextProps.params.id);
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.props.findArtist(nextProps.match.params.id);
     }
   }
 
@@ -35,7 +35,7 @@ class ArtistEdit extends Component {
     event.preventDefault();
     event.stopPropagation();
 
-    this.props.editArtist(this.props.params.id, this.state);
+    this.props.editArtist(this.props.match.params.id, this.state);
   }
 
   render() {
@@ -44,34 +44,32 @@ class ArtistEdit extends Component {
         <div className="input-field">
           <input
             value={this.state.name}
-            onChange={e => this.setState({ name: e.target.value })}
+            onChange={(e) => this.setState({ name: e.target.value })}
             placeholder="Name"
           />
         </div>
         <div className="input-field">
           <input
             value={this.state.age}
-            onChange={e => this.setState({ age: e.target.value })}
+            onChange={(e) => this.setState({ age: e.target.value })}
             placeholder="Age"
           />
         </div>
         <div className="input-field">
           <input
             value={this.state.yearsActive}
-            onChange={e => this.setState({ yearsActive: e.target.value })}
+            onChange={(e) => this.setState({ yearsActive: e.target.value })}
             placeholder="Years Active"
           />
         </div>
         <div className="input-field">
           <input
             value={this.state.genre}
-            onChange={e => this.setState({ genre: e.target.value })}
+            onChange={(e) => this.setState({ genre: e.target.value })}
             placeholder="Genre"
           />
         </div>
-        <div className="has-error">
-          {this.props.errorMessage}
-        </div>
+        <div className="has-error">{this.props.errorMessage}</div>
         <button className="btn">Submit</button>
       </form>
     );
