@@ -6,8 +6,8 @@ import { GENRES } from './constants';
 const url = 'mongodb://localhost:27017';
 const dbName = 'upstar_music';
 
-const MINIMUM_ARTISTS = 2;
-const ARTISTS_TO_ADD = 15;
+const MINIMUM_ARTISTS = 200;
+const ARTISTS_TO_ADD = 15000;
 
 MongoClient.connect(url, function(err, client) {
   let artistsCollection = client.db(dbName).collection('artists');
