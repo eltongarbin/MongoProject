@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Paginator from './Paginator';
 import * as actions from '../../actions';
 
 class ArtistIndex extends Component {
   onChange(_id) {
-    if (_.contains(this.props.selection, _id)) {
+    if (_.includes(this.props.selection, _id)) {
       this.props.deselectArtist(_id);
     } else {
       this.props.selectArtist(_id);
@@ -24,7 +24,7 @@ class ArtistIndex extends Component {
           <input
             id={_id}
             type="checkbox"
-            checked={_.contains(this.props.selection, _id)}
+            checked={_.includes(this.props.selection, _id)}
             onChange={() => this.onChange(_id)}
           />
           <label htmlFor={_id} />
@@ -40,9 +40,9 @@ class ArtistIndex extends Component {
             {artist.albums ? artist.albums.length : 0} albums released
           </p>
         </div>
-        <Link to={`artists/${artist._id}`} className="secondary-content">
-           <i className="material-icons">play_arrow</i>
-         </Link>
+        <Link to={`/artists/${artist._id}`} className="secondary-content">
+          <i className="material-icons">play_arrow</i>
+        </Link>
       </li>
     );
   }
@@ -54,7 +54,9 @@ class ArtistIndex extends Component {
   }
 
   renderEmptyCollection() {
-    if (this.props.artists.all.length) { return; }
+    if (this.props.artists.all.length) {
+      return;
+    }
 
     return (
       <div className="center-align">
