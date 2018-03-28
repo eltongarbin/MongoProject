@@ -1,11 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/muber');
 
 const app = express();
+const routes = require('./routes/routes');
 
-// Watch for inconming requests of method GET
-// to the route http://localhost:3050/api
-app.get('/api', (req, res) => {
-  res.send({ hi: 'there' });
-});
+app.use(bodyParser.json());
+routes(app);
 
 module.exports = app;
