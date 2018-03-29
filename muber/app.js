@@ -3,7 +3,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/muber');
+if (process.env.NODE_ENV != 'test') {
+  mongoose.connect('mongodb://localhost/muber');
+}
 
 const app = express();
 const routes = require('./routes/routes');
