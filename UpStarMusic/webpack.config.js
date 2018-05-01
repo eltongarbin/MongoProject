@@ -48,5 +48,5 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './',
     port: 4172
-  }  
+  }
 };
